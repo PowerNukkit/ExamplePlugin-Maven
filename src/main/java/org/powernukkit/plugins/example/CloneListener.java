@@ -17,7 +17,7 @@ public class CloneListener implements Listener {
         
         // Affect only the clones
         if (!(entity instanceof EntityHuman)
-                || !entity.namedTag.getBoolean("IsClone")) {
+                || !entity.namedTag.getBoolean("IsCloned")) {
             return;
         }
         
@@ -34,8 +34,8 @@ public class CloneListener implements Listener {
         
         // And give the player a present
         Item flowerItem = Item.getBlock(BlockID.RED_FLOWER);
-        flowerItem.setCustomName(TextFormat.RED+"Congratulations!");
-        flowerItem.setLore("This is a present for your finding!");
+        flowerItem.setCustomName(TextFormat.RESET+""+TextFormat.RED+"Congratulations!");
+        flowerItem.setLore(TextFormat.RESET+""+TextFormat.LIGHT_PURPLE+"This is a present for your finding!");
         
         // The will guarantee that the player receive the present by dropping it on the floor if the inventory is full 
         for (Item drop: player.getInventory().addItem(flowerItem)) {

@@ -17,13 +17,15 @@ public class CloneCommand implements CommandExecutor {
         }
         Player player = (Player) commandSender;
         player.saveNBT();
-        new EntityHuman(player.getChunk(), new CompoundTag()
+        EntityHuman human = new EntityHuman(player.getChunk(), new CompoundTag()
                 .put("Pos", player.namedTag.get("Pos").copy())
                 .put("Rotation", player.namedTag.get("Rotation").copy())
                 .put("Motion", player.namedTag.get("Motion").copy())
                 .put("Skin", player.namedTag.get("Skin").copy())
                 .putBoolean("IsCloned", true)
         );
+        human.setSkin(player.getSkin());
+        human.spawnToAll();
         player.sendMessage(TextFormat.DARK_GREEN+""+TextFormat.BOLD+"Success!"+TextFormat.RESET+TextFormat.GREEN+" You have been cloned!");
         return true;
     }

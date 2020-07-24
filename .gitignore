@@ -41,6 +41,7 @@ gradle-app.setting
 hs_err_pid*
 
 /.idea
+/run
 
 !/libs
 !/libs/*.jar

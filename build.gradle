@@ -1,5 +1,6 @@
 plugins {
-    id 'java'
+    //id 'application'
+    id 'java-library'
 }
 
 group 'org.powernukkit.plugins'
@@ -12,4 +13,47 @@ repositories {
 
 dependencies {
     implementation name: 'powernukkit', version: '1.3.1.1-PN', ext: 'jar'
+}
+
+///////////////////////////////////////////////////////////////////
+// Some fancy functions to allow you to debug your plugin easily //
+// Just run ./gradlew run -q to run PowerNukkit with your plugin //
+// Or execute the "debug" task in debug mode with your IDE       //
+///////////////////////////////////////////////////////////////////
+
+task debug(type: JavaExec, dependsOn: 'createDebugJar') {
+    group = "Execution"
+    description = "Run PowerNukkit with your plugin in debug mode (without Watchdog Thread)"
+    classpath = sourceSets.main.runtimeClasspath
+    main = 'cn.nukkit.Nukkit'
+    workingDir = 'run'
+    systemProperties = ['file.encoding': 'UTF-8', disableWatchdog: true]
+    standardInput = System.in
+}
+
+task run(type: JavaExec, dependsOn: 'createDebugJar') {
+    group = "Execution"
+    description = "Run PowerNukkit with your plugin"
+    classpath = sourceSets.main.runtimeClasspath
+    main = 'cn.nukkit.Nukkit'
+    workingDir = 'run'
+    systemProperties = ['file.encoding': 'UTF-8']
+    standardInput = System.in
+}
+
+task createDebugJar(type: Jar, dependsOn: classes) {
+    group = "Execution"
+    description = "Creates a fake jar to make PowerNukkit load your plugin directly from the compiled classes"
+    
+    from(sourceSets.main.output.resourcesDir) {
+        include('plugin.yml')
+        include('nukkit.yml')
+    }
+
+    destinationDirectory.set(file('run/plugins'))
+    archiveBaseName.set('__plugin_loader')
+    archiveExtension.set('jar')
+    archiveAppendix.set('')
+    archiveClassifier.set('')
+    archiveVersion.set('')
 }
