@@ -14,6 +14,7 @@ These is enough to serve as an example on how to:
 - Detect attacks
 - Make entities invulnerable
 - Create and fill a `plugin.yml` file
+- Debug your plugin properly
 
 ## Cloning and importing
 1. Just do a normal `git clone https://github.com/PowerNukkit/ExamplePlugin.git` (or the URL of your own git repository)
